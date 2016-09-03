@@ -20,12 +20,21 @@
     </section>
   </aside>
   <div class="col-md-8">
-    <%= render 'follow_form' if logged_in? %>
-    <% if @user.microposts.any? %>
-      <h3>Microposts (<%= @user.microposts.count %>)</h3>
-      <ol class="microposts">
-        <%= render @user.microposts %>
-      </ol>
+    <% if @users.any? %>
+      <section class="user_info">
+        <ul class="list-group">
+
+        <% @users.each do |user| %>
+          <li class="list-group-item" style="overflow:hidden;">
+            <h2 class="list-group-item-heading text-left">
+              <%= gravatar_for(user, size: 50) %>
+              <%= link_to user.name, user %>
+            </h2>
+          </li>
+        <% end %>
+
+        </ul>
+      </section>
     <% end %>
   </div>
 </div>

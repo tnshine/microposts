@@ -8,10 +8,6 @@ class UsersController < ApplicationController
     @microposts = @user.microposts.order(created_at: :desc)
   end
 
-  def show
-    @user = User.find(params[:id])
-  end
-
   def new
     @user = User.new
   end
@@ -36,6 +32,18 @@ class UsersController < ApplicationController
     else
       render 'edit'
     end
+  end
+
+  def following
+    @user = User.find(params[:id])
+    @users = @user.following_users
+    render 'result_follow'
+  end
+  
+  def followers
+    @user = User.find(params[:id])
+    @users = @user.follower_users
+    render 'result_follow'
   end
 
   private
