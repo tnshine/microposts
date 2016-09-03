@@ -1,10 +1,23 @@
-<h1>
-  <%= gravatar_for @user %>
-  <%= @user.name %>
-</h1>
-
-<h2>自己紹介</h2>
-<p><%= @user.description %></p>
-
-<h2>場所</h2>
-<p><%= @user.location %></p>
+<div class="row">
+  <aside class="col-md-4">
+    <section class="user_info">
+      <h1>
+        <%= gravatar_for @user %>
+        <%= @user.name %>
+      </h1>
+      <h2>自己紹介</h2>
+      <p><%= @user.description %></p>
+      
+      <h2>場所</h2>
+      <p><%= @user.location %></p>
+    </section>
+  </aside>
+  <div class="col-md-8">
+    <% if @user.microposts.any? %>
+      <h3>Microposts (<%= @user.microposts.count %>)</h3>
+      <ol class="microposts">
+        <%= render @user.microposts %>
+      </ol>
+    <% end %>
+  </div>
+</div>
