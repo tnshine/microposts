@@ -9,6 +9,11 @@ class User < ActiveRecord::Base
 
     has_many :microposts
 
+    # 自分と、フォローしているユーザーのつぶやきを取得する
+    def feed_items
+        Micropost.where(user_id: following_user_ids + [self.id])
+    end
+
     has_many :following_relationships, class_name:  "Relationship",
                                      foreign_key: "follower_id",
                                      dependent:   :destroy
