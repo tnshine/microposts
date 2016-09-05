@@ -1,10 +1,12 @@
 <div class="row">
   <aside class="col-md-4">
     <section class="user_info">
+        <%= gravatar_for(@user, size: 50) %>
       <h1>
-        <%= gravatar_for @user %>
         <%= @user.name %>
       </h1>
+      <span><%= link_to "view profile", @user %></span>
+      <span><%= pluralize(@user.microposts.count, "micropost") %></span>
     </section>
     <section>
       <p><%= @user.description %></p>
@@ -21,11 +23,16 @@
   </aside>
   <div class="col-md-8">
     <%= render 'follow_form' if logged_in? %>
+
     <% if @user.microposts.any? %>
       <h3>Microposts (<%= @user.microposts.count %>)</h3>
       <ol class="microposts">
-        <%= render @user.microposts %>
+      <% @microposts.each do |micropost| %>
+        <%= render partial: 'microposts/micropost', locals: { micropost: micropost } %>
+      <% end %>
       </ol>
+      <%= paginate @microposts %>
     <% end %>
+
   </div>
 </div>

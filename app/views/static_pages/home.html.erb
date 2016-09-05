@@ -4,11 +4,25 @@
       <section class="user_info">
         <%= render 'shared/user_info' %>
       </section>
-      <section class="micropost_form">
-        <%= render 'shared/micropost_form' %>
+      <section>
+        <p><%= current_user.description %></p>
+        <p><%= current_user.location %></p>
+        <div class="btn-group btn-group-justified" role="group" aria-label="...">
+          <a href="<%= following_user_path(current_user) %>" class="btn btn-default">
+            followings <span class="badge"><%= current_user.following_users.count %></span>
+          </a>
+          <a href="<%= followers_user_path(current_user) %>" class="btn btn-default">
+            followers <span class="badge"><%= current_user.follower_users.count %></span>
+          </a>
+        </div>
       </section>
     </aside>
     <div class="col-md-8">
+      <h3>What’s happening?</h3>
+      <section class="micropost_form">
+        <%= render 'shared/micropost_form' %>
+      </section>
+
       <h3>Micropost Feed</h3>
       <%= render 'shared/feed' %>
     </div>

@@ -1,14 +1,19 @@
 class MicropostsController < ApplicationController
   before_action :logged_in_user, only: [:create]
 
+  def index
+    @user = User.find(params[:id])
+    @microposts = @user.microposts.order(created_at: :desc).page(params[:page]).per(5)
+  end
+
   def create
     @micropost = current_user.microposts.build(micropost_params)
     if @micropost.save
       flash[:success] = "Micropost created!"
       redirect_to root_url
     else
-      @feed_items = current_user.feed_items.includes(:user).order(created_at: :desc)
-      render 'static_pages/home'
+      flash[:danger] = "ERROR - Content can't be blank"
+      redirect_to request.referrer
     end
   end
 

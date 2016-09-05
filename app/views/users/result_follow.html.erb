@@ -1,10 +1,12 @@
 <div class="row">
   <aside class="col-md-4">
     <section class="user_info">
+        <%= gravatar_for(@user, size: 50) %>
       <h1>
-        <%= gravatar_for @user %>
         <%= @user.name %>
       </h1>
+      <span><%= link_to "view profile", @user %></span>
+      <span><%= pluralize(@user.microposts.count, "micropost") %></span>
     </section>
     <section>
       <p><%= @user.description %></p>
@@ -20,21 +22,27 @@
     </section>
   </aside>
   <div class="col-md-8">
-    <% if @users.any? %>
       <section class="user_info">
-        <ul class="list-group">
 
-        <% @users.each do |user| %>
+      <% if request.path_info.end_with?("followers") %>
+        <h3><%= @user.name %>をフォローしているユーザー</h3>
+      <% else %>
+        <h3><%= @user.name %>がフォローしているユーザー</h3>
+      <% end %>
+
+      <% if @users.any? %>
+        <ul class="list-group">
+          <% @users.each do |user| %>
           <li class="list-group-item" style="overflow:hidden;">
             <h2 class="list-group-item-heading text-left">
               <%= gravatar_for(user, size: 50) %>
               <%= link_to user.name, user %>
             </h2>
           </li>
-        <% end %>
-
+          <% end %>
         </ul>
+        <%= paginate @users %>
+      <% end %>
       </section>
-    <% end %>
   </div>
 </div>
