@@ -1,0 +1,23 @@
+    <section class="user_info">
+        <%= gravatar_for(@user, size: 50) %>
+      <h1>
+        <%= @user.name %>
+      </h1>
+      <span><%= link_to "view profile", @user %></span>
+      <span><%= pluralize(@user.microposts.count, "micropost") %></span>
+    </section>
+    <section>
+      <p><%= @user.description %></p>
+      <p><%= @user.location %></p>
+      <div class="btn-group btn-group-justified" role="group" aria-label="...">
+        <a href="<%= following_user_path(@user) %>" class="btn btn-default">
+          followings <span class="badge"><%= @user.following_users.count %></span>
+        </a>
+        <a href="<%= followers_user_path(@user) %>" class="btn btn-default">
+          followers <span class="badge"><%= @user.follower_users.count %></span>
+        </a>
+        <a href="<%= favorite_user_path(@user) %>" class="btn btn-default">
+          favorites <span class="badge"><%= @user.favorite_microposts.count %></span>
+        </a>
+      </div>
+    </section>
