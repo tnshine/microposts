@@ -3,6 +3,8 @@ class Micropost < ActiveRecord::Base
   validates :user_id, presence: true
   validates :content, presence: true, length: { maximum: 140 }
 
+  paginates_per 5
+
   has_many :favorites
   has_many :favoriting_users, through: :favorites, source: :user
 end

@@ -3,7 +3,7 @@ class MicropostsController < ApplicationController
 
   def index
     @user = User.find(params[:id])
-    @microposts = @user.microposts.order(created_at: :desc).page(params[:page]).per(5)
+    @microposts = @user.microposts.order(created_at: :desc).page(params[:page])
   end
 
   def create

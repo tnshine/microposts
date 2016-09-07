@@ -161,6 +161,15 @@ aside {
       padding: 5px 0;
     }
   }
+  .poststate {
+    display: block;
+    margin-left: 60px;
+    img {
+      float: none;
+      margin-right: 0;
+      margin-top: 0;
+    }
+  }
   .timestamp {
     color: $gray-light;
     display: block;
@@ -170,6 +179,9 @@ aside {
     float: left;
     margin-right: 10px;
     margin-top: 5px;
+    &:hover {
+      opacity: 0.7;
+    }
   }
 }
 

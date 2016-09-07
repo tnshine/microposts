@@ -17,12 +17,13 @@ class User < ActiveRecord::Base
         favorites.find_by(micropost_id: micropost.id)
     end
     
-    def favorite!(micropost)
-        favorites.create!(micropost_id: micropost.id)
+    def favorite(micropost)
+        favorites.find_or_create_by(micropost_id: micropost.id)
     end
     
-    def unfavorite!(micropost)
-        favorites.find_by(micropost_id: micropost.id).destroy
+    def unfavorite(micropost)
+        record = favorites.find_by(micropost_id: micropost.id)
+        record.destroy if record.present?
     end
 
     # 自分と、フォローしているユーザーのつぶやきを取得する
