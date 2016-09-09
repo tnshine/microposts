@@ -9,6 +9,23 @@ class User < ActiveRecord::Base
 
     has_many :microposts
     
+    # リポスト(リツイート)
+    has_many :reposts
+    has_many :reposts_microposts, through: :reposts, source: :micropost
+
+    def reposts?(micropost)
+        reposts.find_by(micropost_id: micropost.id)
+    end
+    
+    def repost(micropost)
+        reposts.find_or_create_by(micropost_id: micropost.id)
+    end
+    
+    def unrepost(micropost)
+        record = reposts.find_by(micropost_id: micropost.id)
+        record.destroy if record.present?
+    end
+
     # お気に入り
     has_many :favorites
     has_many :favorite_microposts, through: :favorites, source: :micropost

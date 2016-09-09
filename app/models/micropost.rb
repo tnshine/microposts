@@ -7,4 +7,10 @@ class Micropost < ActiveRecord::Base
 
   has_many :favorites
   has_many :favoriting_users, through: :favorites, source: :user
+
+  has_many :reposts
+  has_many :reposting_users, through: :reposts, source: :user
+  
+  belongs_to :reposts_microposts, class_name: 'Micropost', foreign_key: 'owner'
+
 end

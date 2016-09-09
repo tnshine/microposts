@@ -1,0 +1,7 @@
+<%= link_to repost_path(current_user.reposts.find_by(micropost_id: micropost.id)), remote: true, method: :delete, class: 'repost-link' do %>
+  <i class="fa fa-retweet unrepost"></i>
+<% end %>
+(<%= micropost.reposting_users.count %>)
+<% micropost.reposting_users.each do |user| %>
+  <%= link_to gravatar_for(user, size: 16), user, class: "contentGravatar" %>
+<% end %>

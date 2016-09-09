@@ -1,0 +1,5 @@
+<% if current_user.reposts?(micropost) %>
+    <%= render 'reposts/destroy', micropost: micropost %>
+<% else %>
+    <%= render 'reposts/create', micropost: micropost %>
+<% end %>

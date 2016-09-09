@@ -1,0 +1,7 @@
+<%= link_to reposts_path(micropost_id: micropost.id), remote: true, method: :post, class: 'repost-link' do %>
+  <i class="fa fa-retweet"></i>
+<% end %>
+(<%= micropost.reposting_users.count %>)
+<% micropost.reposting_users.each do |user| %>
+  <%= link_to gravatar_for(user, size: 16), user, class: "contentGravatar" %>
+<% end %>

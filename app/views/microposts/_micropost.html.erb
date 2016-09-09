@@ -1,15 +1,49 @@
-<li id="micropost-<%= micropost.id %>">
-  <%= link_to gravatar_for(micropost.user, size: 50), micropost.user %>
-  <span class="user"><%= link_to micropost.user.name, micropost.user %></span>
-  <span class="content"><%= micropost.content %></span>
-  <span class="poststate" id="micropost_<%= micropost.id %>">
-    <%= render 'favorites/favorite_btn', micropost: micropost %>
-  </span>
-  <span class="timestamp">
-    Posted <%= time_ago_in_words(micropost.created_at) %> ago.
-    <% if current_user == micropost.user %>
-      <%= link_to "delete", micropost, method: :delete,
-                                       data: { confirm: "You sure?" } %>
+<% if micropost.owner.nil? %>
+  <li id="micropost-<%= micropost.id %>">
+    <%= link_to gravatar_for(micropost.user, size: 50), micropost.user %>
+    <span class="user"><%= link_to micropost.user.name, micropost.user %></span>
+    <span class="content"><%= micropost.content %></span>
+    <span class="poststate" id="micropost_<%= micropost.id %>">
+      <%= render 'favorites/favorite_btn', micropost: micropost %>
+    </span>
+    <span class="poststate" id="micropost_re_<%= micropost.id %>">
+      <%= render 'reposts/repost_btn', micropost: micropost %>
+    </span>
+    <span class="timestamp">
+      [ID:<%= micropost.id %>]
+      Posted <%= time_ago_in_words(micropost.created_at) %> ago.
+      <% if current_user == micropost.user %>
+        <%= link_to "delete", micropost, method: :delete,
+                                         data: { confirm: "You sure?" } %>
+      <% end %>
+    </span>
+  </li>
+<% else %>
+  <li id="micropost-<%= micropost.id %>">
+    <div><%= link_to micropost.user.name, micropost.user %>がリツイート
+      <% if current_user == micropost.user %>
+        <%= link_to "delete", micropost, method: :delete,
+                                         data: { confirm: "You sure?" } %>
+      <% end %>
+    </div>
+    <div style="margin:5px;padding:10px;border:1px solid #DDD;">
+    <% if micropost.reposts_microposts %>
+      <%= link_to gravatar_for(micropost.reposts_microposts.user, size: 50), micropost.reposts_microposts.user %>
+      <span class="user"><%= link_to micropost.reposts_microposts.user.name, micropost.reposts_microposts.user %></span>
+      <span class="content"><%= micropost.reposts_microposts.content %></span>
+      <span class="poststate" id="micropost_<%= micropost.reposts_microposts.id %>">
+        <%= render 'favorites/favorite_btn', micropost: micropost.reposts_microposts %>
+      </span>
+      <span class="poststate" id="micropost_re_<%= micropost.reposts_microposts.id %>">
+        <%= render 'reposts/repost_btn', micropost: micropost.reposts_microposts %>
+      </span>
+      <span class="timestamp">
+        [ID:<%= micropost.reposts_microposts.id %>]
+        Posted <%= time_ago_in_words(micropost.reposts_microposts.created_at) %> ago.
+      </span>
+    <% else %>
+      このツイートは投稿者によって削除されました。
     <% end %>
-  </span>
-</li>
+    </div>
+  </li>
+<% end %>

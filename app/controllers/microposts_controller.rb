@@ -1,5 +1,5 @@
 class MicropostsController < ApplicationController
-  before_action :logged_in_user, only: [:create]
+  before_action :logged_in_user, only: [:create, :destroy]
 
   def index
     @user = User.find(params[:id])
@@ -27,6 +27,6 @@ class MicropostsController < ApplicationController
 
   private
   def micropost_params
-    params.require(:micropost).permit(:content)
+    params.require(:micropost).permit(:content, :owner)
   end
 end
